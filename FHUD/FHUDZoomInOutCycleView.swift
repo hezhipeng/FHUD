@@ -23,7 +23,7 @@ class FHUDZoomInOutCycleView: UIView {
     }
     
     deinit {
-        print(#file+" "+#function)
+//        print(#file+" "+#function)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,6 +39,14 @@ class FHUDZoomInOutCycleView: UIView {
         super.removeFromSuperview()
         isAnimation = false
         zoomInOutCycleLayer.removeAllAnimations()
+    }
+    
+    override var tintColor: UIColor? {
+        didSet {
+            if let tintColor = tintColor {
+                self.zoomInOutCycleLayer.strokeColor = tintColor.cgColor
+            }
+        }
     }
     
     private func path(index: Int) -> UIBezierPath {
@@ -82,10 +90,10 @@ class FHUDZoomInOutCycleView: UIView {
         zoomInOutCycleLayer.add(groud, forKey: "groud")
     }
 
-    let zoomInOutCycleLayer: CAShapeLayer = {
+    lazy var zoomInOutCycleLayer: CAShapeLayer = {
         let loading = CAShapeLayer()
         loading.lineWidth = 3
-        loading.strokeColor = UIColor.white.cgColor
+        loading.strokeColor = self.tintColor?.cgColor
         loading.fillColor = UIColor.clear.cgColor
         loading.strokeStart = 1
         loading.lineCap = kCALineCapRound
@@ -100,6 +108,5 @@ extension FHUDZoomInOutCycleView: CAAnimationDelegate {
         if isAnimation {
             self.statrAnimation()
         }
-        print("============================")
     }
 }

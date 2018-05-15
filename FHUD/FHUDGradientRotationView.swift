@@ -1,5 +1,5 @@
 //
-//  FHUDSemicircleRotationView.swift
+//  FHUDGradientRotationView.swift
 //  FHUD
 //
 //  Created by Frank.he on 2018/5/14.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FHUDSemicircleRotationView: UIView {
+class FHUDGradientRotationView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +22,7 @@ class FHUDSemicircleRotationView: UIView {
     }
     
     deinit {
-        print(#file+" "+#function)
+//        print(#file+" "+#function)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -45,14 +45,11 @@ class FHUDSemicircleRotationView: UIView {
     override var tintColor: UIColor? {
         didSet {
             if let tintColor = tintColor {
-//                let colorTop = tintColor.cgColor
-//                let colorBottom = tintColor.withAlphaComponent(0.1).cgColor
-//                gradientLayer.colors = [colorTop, colorBottom]
-//                gradientLayer.locations = [0.0, 1.0]
-//                gradientLayer.frame = self.view.bounds
-//
-//
-//                self.semicircleGradientLayer.strokeColor = tintColor.cgColor
+                let topColors = [tintColor.cgColor, tintColor.withAlphaComponent(0.5).cgColor]
+                let bottomColors = [tintColor.withAlphaComponent(0.5).cgColor,tintColor.withAlphaComponent(0.0).cgColor]
+
+                topGradientLayer.colors = topColors
+                bottomGradientLayer.colors = bottomColors
             }
         }
     }
@@ -84,7 +81,6 @@ class FHUDSemicircleRotationView: UIView {
     
     lazy var topGradientLayer: CAGradientLayer = {
         
-        //颜色渐变
         let colors = [UIColor.white.cgColor, UIColor.white.withAlphaComponent(0.5).cgColor]
         let gradientLayer = CAGradientLayer()
         gradientLayer.shadowPath = path().cgPath
@@ -96,12 +92,11 @@ class FHUDSemicircleRotationView: UIView {
     
     lazy var bottomGradientLayer: CAGradientLayer = {
         
-        //颜色渐变
         let colors = [UIColor.white.withAlphaComponent(0.5).cgColor, UIColor.white.withAlphaComponent(0.0).cgColor]
         let gradientLayer = CAGradientLayer()
         gradientLayer.shadowPath = path().cgPath
         gradientLayer.startPoint = CGPoint(x: 0, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
         gradientLayer.colors = colors
         return gradientLayer
     }()
@@ -118,7 +113,6 @@ class FHUDSemicircleRotationView: UIView {
         layer.strokeEnd = 1;
         layer.lineCap = kCALineCapRound;
         layer.lineDashPhase = 0.8;
-        
         return layer
     }()
     

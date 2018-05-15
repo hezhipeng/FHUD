@@ -10,9 +10,6 @@ import UIKit
 
 class FHUDRoundProgressView: UIView {
 
-    private let progressTintColor = UIColor.white.withAlphaComponent(1)
-    private let backgroundTintColor = UIColor.white.withAlphaComponent(1)
-    
     public var progress = 0.0 {
         didSet {
             DispatchQueue.main.async {
@@ -43,18 +40,33 @@ class FHUDRoundProgressView: UIView {
         processBackgroundPath.lineWidth = CGFloat(lineWidth)
         processBackgroundPath.lineCapStyle = .butt
         processBackgroundPath.addArc(withCenter: center, radius: CGFloat(radius), startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle), clockwise: true)
-        backgroundTintColor.set()
+        backgroundTintColor?.set()
         processBackgroundPath.stroke()
         
         let processPath = UIBezierPath()
         processPath.lineWidth = CGFloat(lineWidth * 2)
         let processRadius = self.bounds.maxX/2 - CGFloat(lineWidth)
         
-        progressTintColor.setFill()
+        progressTintColor?.setFill()
         let endAngle1 = progress * 2 * Double.pi + startAngle
         processPath.addArc(withCenter: center, radius: CGFloat(processRadius), startAngle: CGFloat(startAngle), endAngle: CGFloat(endAngle1), clockwise: true)
-        progressTintColor.set()
+        progressTintColor?.set()
         processPath.stroke()
     }
 
+    public var progressTintColor: UIColor? {
+        didSet {
+            if let _ = progressTintColor {
+                self.setNeedsDisplay()
+            }
+        }
+    }
+    
+    public var backgroundTintColor: UIColor? {
+        didSet {
+            if let _ = backgroundTintColor {
+                self.setNeedsDisplay()
+            }
+        }
+    }
 }

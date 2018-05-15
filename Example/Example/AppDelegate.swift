@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+//        FHUD.appearance().titleColor = .red
+//        FHUD.appearance().titleFont = UIFont.systemFont(ofSize: 15)
+//        FHUD.appearance().contextViewBackgroundColor = .yellow   
+//        FHUD.appearance().contextTintColor = .black
+//
+//        FHUD.appearance().backgroundTintColor = UIColor.blue
+//        FHUD.appearance().progressTintColor = UIColor.green
+        
+//        FHUD.appearance().contextViewBackgroundColor = .yellow
+
         return true
     }
 

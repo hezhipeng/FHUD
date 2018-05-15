@@ -9,11 +9,8 @@
 import UIKit
 
 class FHUDView: FHUDBackgroundView {
-
-    static let defaultFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 80))
-    static let defaultFrameForTitle = CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100))
+   
     static let styleSize = CGSize(width: 37, height: 37)
-    static let styleSizeForTitle = CGSize(width: 45, height: 45)
 
     internal var progressMode: HUDProgressMode
     private var title: String?
@@ -21,18 +18,25 @@ class FHUDView: FHUDBackgroundView {
 
     public var progress = 0.0 {
         didSet {
-            if case .round = progressMode {
+            switch progressMode {
+            case .round:
                 if let loadStyleView = loadStyleView as? FHUDRoundProgressView {
                     loadStyleView.progress = progress
                 }
+            case .annular:
+                if let loadStyleView = loadStyleView as? FHUDAnnularProgressView {
+                    loadStyleView.progress = progress
+                }
+            default:
+                break
             }
         }
     }
     
     // MARK: - life cycle
     
-    convenience init(_ mode: HUDProgressMode, _ title: String? = nil) {
-        self.init(frame: (title != nil) ? FHUDView.defaultFrameForTitle : FHUDView.defaultFrame)
+    convenience init(_ frame: CGRect, _ mode: HUDProgressMode, _ title: String? = nil) {
+        self.init(frame: frame)
         self.progressMode = mode
         self.title = title
         setupSubviews()
@@ -68,13 +72,13 @@ class FHUDView: FHUDBackgroundView {
     }
     
     deinit {
-        print(#file+" "+#function)
+//        print(#file+" "+#function)
     }
     
     // MARK: - private method
 
     private func setupSubviews() {
-        self.backgroundColor =  UIColor.black.withAlphaComponent(0.8)
+        self.mode = .blur
         self.layer.cornerRadius = 5.0;
         
         self.addSubview(loadStyleView)
@@ -140,20 +144,77 @@ class FHUDView: FHUDBackgroundView {
         case .zoomInOutCycle:
             return FHUDZoomInOutCycleView()
         case .round:
-            self.clipsToBounds = false
-            return FHUDRoundProgressView.init(frame: CGRect.zero)
+            return FHUDRoundProgressView(frame: CGRect.zero)
+        case .annular:
+            return FHUDAnnularProgressView(frame: CGRect.zero)
+        case .gradientRotation:
+            return FHUDGradientRotationView()
         }
     }()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 15.0)
-        label.textColor = UIColor.white.withAlphaComponent(0.85)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.25
         return label
     }()
+    
+    // MARK: - Appearance set
+    
+    public var titleColor: UIColor? {
+        didSet {
+            if let titleColor = titleColor {
+                self.titleLabel.textColor = titleColor
+            }
+        }
+    }
+    
+    public var titleFont: UIFont? {
+        didSet {
+            if let titleFont = titleFont {
+                self.titleLabel.font = titleFont
+            }
+        }
+    }
+    
+    public var contextViewBackgroundColor: UIColor? {
+        didSet {
+            if let contextViewBackgroundColor = contextViewBackgroundColor {
+                self.backgroundColor = contextViewBackgroundColor
+            }
+        }
+    }
+    
+    public var contextTintColor: UIColor? {
+        didSet {
+            if let contextTintColor = contextTintColor {
+                loadStyleView.tintColor = contextTintColor
+            }
+        }
+    }
+    
+    public var progressTintColor: UIColor? {
+        didSet {
+            if let progressTintColor = progressTintColor,
+                let progress = loadStyleView as? FHUDRoundProgressView {
+                progress.progressTintColor = progressTintColor
+            }
+            if let progressTintColor = progressTintColor,
+                let progress = loadStyleView as? FHUDAnnularProgressView {
+                progress.progressTintColor = progressTintColor
+            }
+        }
+    }
+    
+    public var backgroundTintColor: UIColor? {
+        didSet {
+            if let backgroundTintColor = backgroundTintColor,
+                let progress = loadStyleView as? FHUDRoundProgressView {
+                progress.backgroundTintColor = backgroundTintColor
+            }
+        }
+    }
     
     // MARK: - systerm constraints
     

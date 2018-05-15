@@ -37,7 +37,7 @@ class FHUDIndicatorView: UIView {
     }
     
     deinit {
-        print(#file+" "+#function)
+//        print(#file+" "+#function)
     }
     
     lazy var activityIndicatorView: UIActivityIndicatorView = {

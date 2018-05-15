@@ -9,7 +9,18 @@
 import Foundation
 
 public class FHUD: UIView {
-
+    
+    let `default` = (titleColor: UIColor.white.withAlphaComponent(0.85),
+                     titleFont: UIFont.systemFont(ofSize: 15.0),
+                     contextViewBackgroundColor: UIColor.black.withAlphaComponent(0.8),
+                     contextTintColor: UIColor.white.withAlphaComponent(1),
+                     progressTintColor: UIColor.white.withAlphaComponent(1),
+                     backgroundTintColor: UIColor.white.withAlphaComponent(1),
+                     imageSize: CGSize(width: 40, height: 40),
+                     offset: CGPoint(x: 0, y: 80),
+                     defaultContentFrame: CGRect(origin: CGPoint.zero, size: CGSize(width: 80, height: 80)),
+                     defaultContentFrameForTitle: CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100)))
+    
     // MARK: - class method
 
     public class func show(_ mode: FHUDMode, onView view: UIView? = nil, animated: Bool = true) -> FHUD {
@@ -18,6 +29,24 @@ public class FHUD: UIView {
         let hud = FHUD.init(mode, superView)
         superView.addSubview(hud)
         hud.showAnimated(animated)
+        
+        if case .flash = mode {
+            DispatchQueue.global(qos: .userInitiated).async {
+                sleep(2)
+                DispatchQueue.main.async {
+                    FHUD.hide(onView: superView)
+                }
+            }
+        }
+        else if case .prompt = mode {
+            DispatchQueue.global(qos: .userInitiated).async {
+                sleep(2)
+                DispatchQueue.main.async {
+                    FHUD.hide(onView: superView)
+                }
+            }
+        }
+        
         return hud
     }
     
@@ -54,7 +83,7 @@ public class FHUD: UIView {
         }
     }
     
-    public var progress = 0.0 {
+    open var progress = 0.0 {
         didSet {
             if case .progress = mode,
                 let proressView = bezelView as? FHUDView {
@@ -63,7 +92,6 @@ public class FHUD: UIView {
         }
     }
     
-    private var backgoundView: FHUDBackgroundView!
     private lazy var bezelView: UIView = {
         return  self.bezelViewFor(mode)
     }()
@@ -95,7 +123,7 @@ public class FHUD: UIView {
     }
     
     deinit {
-        print(#file+" "+#function)
+//        print(#file+" "+#function)
     }
     
     // MARK: - private method
@@ -109,17 +137,56 @@ public class FHUD: UIView {
         let backgroundView = FHUDBackgroundView(frame: self.bounds)
         self.addSubview(backgroundView)
         self.addSubview(bezelView)
+        setAppearance()
+    }
+    
+    private func setAppearance() {
+        
+        if let hudView = bezelView as? FHUDView {
+            hudView.titleColor = titleColor ?? `default`.titleColor
+            hudView.titleFont = titleFont ?? `default`.titleFont
+            
+            hudView.contextViewBackgroundColor = contextViewBackgroundColor ?? `default`.contextViewBackgroundColor
+            hudView.contextTintColor = contextTintColor ?? `default`.contextTintColor
+            
+            hudView.backgroundTintColor = backgroundTintColor ?? `default`.backgroundTintColor
+            hudView.progressTintColor = progressTintColor ?? `default`.progressTintColor
+        }
+        else if let flashView = bezelView as? FHUDFlashView {
+            flashView.titleColor = titleColor ?? `default`.titleColor
+            flashView.titleFont = titleFont ?? `default`.titleFont
+            
+            flashView.contextViewBackgroundColor = contextViewBackgroundColor ?? `default`.contextViewBackgroundColor
+            flashView.imageSize = imageSize ?? `default`.imageSize
+        }
+        else if let promptView = bezelView as? FHUDPromptView {
+            promptView.titleColor = titleColor ?? `default`.titleColor
+            promptView.titleFont = titleFont ?? `default`.titleFont
+            
+            promptView.contextViewBackgroundColor = self.contextViewBackgroundColor ?? `default`.contextViewBackgroundColor
+            promptView.offset = offset ?? `default`.offset
+        }
     }
     
     private func bezelViewFor(_ mode: FHUDMode) -> UIView {
+        
         switch mode {
         case .progress(let progressMode, let title):
-            return FHUDView.init(progressMode, title)
+            if let _ = title {
+                return FHUDView.init(`default`.defaultContentFrameForTitle, progressMode, title)
+            }
+            else {
+                return FHUDView.init(`default`.defaultContentFrame, progressMode, title)
+            }
         case .flash(let image, let title):
-            return FHUDFlashView(image, title)
+            if let _ = title {
+                return FHUDFlashView(`default`.defaultContentFrameForTitle, image, title)
+            }
+            else {
+                return FHUDFlashView(`default`.defaultContentFrame, image, title)
+            }
         case .prompt(let title):
             return FHUDPromptView(title)
-
         }
     }
     
@@ -178,6 +245,56 @@ public class FHUD: UIView {
         }
         else {
             self.done()
+        }
+    }
+    
+    // MARK: - Appearance set
+    
+    @objc dynamic open var titleColor: UIColor? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    @objc dynamic open var titleFont: UIFont? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    @objc dynamic open var contextViewBackgroundColor: UIColor? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    @objc dynamic open var contextTintColor: UIColor? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    @objc dynamic open var progressTintColor: UIColor? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    @objc dynamic open var backgroundTintColor: UIColor? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+    
+    public var imageSize: CGSize? {
+        didSet {
+            self.setAppearance()
+        }
+    }
+
+    public var offset: CGPoint? {
+        didSet {
+            self.setAppearance()
         }
     }
 }

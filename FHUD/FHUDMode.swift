@@ -17,7 +17,9 @@ public enum FHUDMode {
 public enum HUDProgressMode {
     case `default`
     case zoomInOutCycle
+    case gradientRotation
     case round
+    case annular
 }
 
 public enum HUDBackgroundMode {

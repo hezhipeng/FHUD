@@ -17,6 +17,8 @@
 		D0B14F8D20A013120026F53D /* FHUDBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B14F8C20A013120026F53D /* FHUDBackgroundView.swift */; };
 		D0B14F9920A290A00026F53D /* FHUDFlashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B14F9820A290A00026F53D /* FHUDFlashView.swift */; };
 		D0B14F9B20A2ABB00026F53D /* FHUDPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B14F9A20A2ABB00026F53D /* FHUDPromptView.swift */; };
+		D0F4770420A98FF000AAE5B3 /* FHUDAnnularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F4770320A98FF000AAE5B3 /* FHUDAnnularProgressView.swift */; };
+		D0F4770620A9966B00AAE5B3 /* FHUDGradientRotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F4770520A9966B00AAE5B3 /* FHUDGradientRotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		D0B14F8C20A013120026F53D /* FHUDBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHUDBackgroundView.swift; sourceTree = "<group>"; };
 		D0B14F9820A290A00026F53D /* FHUDFlashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHUDFlashView.swift; sourceTree = "<group>"; };
 		D0B14F9A20A2ABB00026F53D /* FHUDPromptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHUDPromptView.swift; sourceTree = "<group>"; };
+		D0F4770320A98FF000AAE5B3 /* FHUDAnnularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHUDAnnularProgressView.swift; sourceTree = "<group>"; };
+		D0F4770520A9966B00AAE5B3 /* FHUDGradientRotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FHUDGradientRotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +74,9 @@
 				D0492E5720A5A3A10067E35E /* FHUDView.swift */,
 				D0492E5320A5A10B0067E35E /* FHUDIndicatorView.swift */,
 				D0492E5920A5C8AD0067E35E /* FHUDZoomInOutCycleView.swift */,
+				D0F4770520A9966B00AAE5B3 /* FHUDGradientRotationView.swift */,
 				D0492E5D20A5CF930067E35E /* FHUDRoundProgressView.swift */,
+				D0F4770320A98FF000AAE5B3 /* FHUDAnnularProgressView.swift */,
 				D0B14F9820A290A00026F53D /* FHUDFlashView.swift */,
 				D0B14F9A20A2ABB00026F53D /* FHUDPromptView.swift */,
 				D0B14F8A20A002320026F53D /* FHUDMode.swift */,
@@ -161,11 +167,13 @@
 				D0B14F9920A290A00026F53D /* FHUDFlashView.swift in Sources */,
 				D0492E5420A5A10B0067E35E /* FHUDIndicatorView.swift in Sources */,
 				D0B14F9B20A2ABB00026F53D /* FHUDPromptView.swift in Sources */,
+				D0F4770620A9966B00AAE5B3 /* FHUDGradientRotationView.swift in Sources */,
 				D0492E5E20A5CF930067E35E /* FHUDRoundProgressView.swift in Sources */,
 				D0492E5A20A5C8AD0067E35E /* FHUDZoomInOutCycleView.swift in Sources */,
 				D0B14F8920A000F10026F53D /* FHUD.swift in Sources */,
 				D0B14F8D20A013120026F53D /* FHUDBackgroundView.swift in Sources */,
 				D0B14F8B20A002320026F53D /* FHUDMode.swift in Sources */,
+				D0F4770420A98FF000AAE5B3 /* FHUDAnnularProgressView.swift in Sources */,
 				D0492E5820A5A3A10067E35E /* FHUDView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,14 +10,11 @@ import Foundation
 
 class FHUDFlashView: FHUDBackgroundView {
     
-    static let defaultFrame = CGRect(origin: CGPoint.zero, size: CGSize(width: 100, height: 100))
-    static let defaultFrameForTitle = CGRect(origin: CGPoint.zero, size: CGSize(width: 120, height: 120))
-
     private var image: UIImage!
     private var title: String?
 
-    convenience init(_ image: UIImage, _ title: String? = nil) {
-        self.init(frame: (title != nil) ? FHUDFlashView.defaultFrameForTitle : FHUDFlashView.defaultFrame)
+    convenience init(_ frame: CGRect, _ image: UIImage, _ title: String? = nil) {
+        self.init(frame: frame)
         self.image = image
         self.title = title
         commonInit()
@@ -33,7 +30,6 @@ class FHUDFlashView: FHUDBackgroundView {
     
     private func commonInit() {
         self.mode = .blur
-        self.backgroundColor =  UIColor.black.withAlphaComponent(0.8)
         self.layer.cornerRadius = 5.0;
         
         self.imageView.image = image
@@ -57,17 +53,16 @@ class FHUDFlashView: FHUDBackgroundView {
             
             let center = CGPoint.init(x: self.bounds.midX, y: self.bounds.midY)
             if let _ = title {
-                self.imageView.bounds = CGRect(x: 0, y: 0, width: 60, height: 60)
+                self.imageView.bounds = CGRect(x: 0, y: 0, width: imageSize?.width ?? 0, height: imageSize?.height ?? 0)
                 self.imageView.center = CGPoint(x: center.x, y: 45)
                 
                 self.titleLabel.bounds = CGRect(x: 0, y: 0, width: self.bounds.maxX, height: 20)
                 self.titleLabel.center = CGPoint(x: center.x, y: self.bounds.maxY - 20)
             }
             else {
-                self.imageView.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
+                self.imageView.bounds = CGRect(x: 0, y: 0, width: imageSize?.width ?? 0, height: imageSize?.height ?? 0)
                 self.imageView.center = center
             }
-            
         }
     }
     
@@ -77,17 +72,46 @@ class FHUDFlashView: FHUDBackgroundView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-//        imageView.backgroundColor = .white
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 15.0)
-        label.textColor = UIColor.white.withAlphaComponent(0.85)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.25
         return label
     }()
+    
+    public var titleColor: UIColor? {
+        didSet {
+            if let titleColor = titleColor {
+                self.titleLabel.textColor = titleColor
+            }
+        }
+    }
+    
+    public var titleFont: UIFont? {
+        didSet {
+            if let titleFont = titleFont {
+                self.titleLabel.font = titleFont
+            }
+        }
+    }
+    
+    public var contextViewBackgroundColor: UIColor? {
+        didSet {
+            if let contextViewBackgroundColor = contextViewBackgroundColor {
+                self.backgroundColor = contextViewBackgroundColor
+            }
+        }
+    }
+    
+    public var imageSize: CGSize? {
+        didSet {
+            if let _ = imageSize {
+                self.setNeedsDisplay()
+            }
+        }
+    }
 }

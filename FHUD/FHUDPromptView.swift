@@ -29,7 +29,6 @@ class FHUDPromptView: FHUDBackgroundView {
     
     private func commonInit() {
         self.mode = .blur
-        self.backgroundColor =  UIColor.black.withAlphaComponent(0.8)
         self.layer.cornerRadius = 5.0;
         
         self.titleLabel.text = title
@@ -52,9 +51,11 @@ class FHUDPromptView: FHUDBackgroundView {
             bounds.size.width += 20
             bounds.size.height += 20
             self.bounds = bounds
-            self.center = CGPoint.init(x: x, y: viewHeight - bounds.midY - 80)
             
-
+            let xOffset = offset?.x ?? 0
+            let yOffset = offset?.y ?? 0
+            let origin = CGPoint.init(x: x, y: viewHeight - bounds.midY)
+            self.center = CGPoint.init(x: origin.x + xOffset, y: origin.y - yOffset)
             
             self.titleLabel.bounds = contentBounds
             self.titleLabel.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
@@ -67,8 +68,40 @@ class FHUDPromptView: FHUDBackgroundView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 15.0)
+        label.font = UIFont.systemFont(ofSize: 15.0)
         label.textColor = UIColor.white.withAlphaComponent(0.85)
         return label
     }()
+    
+    public var titleColor: UIColor? {
+        didSet {
+            if let titleColor = titleColor {
+                self.titleLabel.textColor = titleColor
+            }
+        }
+    }
+    
+    public var titleFont: UIFont? {
+        didSet {
+            if let titleFont = titleFont {
+                self.titleLabel.font = titleFont
+            }
+        }
+    }
+    
+    public var contextViewBackgroundColor: UIColor? {
+        didSet {
+            if let contextViewBackgroundColor = contextViewBackgroundColor {
+                self.backgroundColor = contextViewBackgroundColor
+            }
+        }
+    }
+    
+    public var offset: CGPoint? {
+        didSet {
+            if let _ = offset {
+                self.setNeedsDisplay()
+            }
+        }
+    }
 }
