@@ -171,14 +171,32 @@ class ViewController: UIViewController {
     
     @objc func imageAndTextExample() {
         let _ = FHUD.show(.flash(image: UIImage(named: "cross")!, title: "成功"), onView: self.view)
+        DispatchQueue.global(qos: .userInitiated).async {
+            sleep(3)
+            DispatchQueue.main.async {
+                FHUD.hide(onView: self.view)
+            }
+        }
     }
     
     @objc func imageExample() {
         let _ = FHUD.show(.flash(image: UIImage(named: "checkmark")!, title: nil), onView: self.view)
+        DispatchQueue.global(qos: .userInitiated).async {
+            sleep(3)
+            DispatchQueue.main.async {
+                FHUD.hide(onView: self.view)
+            }
+        }
     }
     
     @objc func promptExample() {
         let _ = FHUD.show(.prompt(title: "hello world"), onView: self.view)
+        DispatchQueue.global(qos: .userInitiated).async {
+            sleep(3)
+            DispatchQueue.main.async {
+                FHUD.hide(onView: self.view)
+            }
+        }
     }
     
     let items = [FExample.init("indicator", #selector(indicatorExample)),

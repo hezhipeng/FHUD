@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FHUD"
-  s.version      = "0.1"
+  s.version      = "0.2"
   s.summary      = "FHUD"
   s.homepage     = "https://github.com/hezhipeng"
   s.license      = "MIT"
