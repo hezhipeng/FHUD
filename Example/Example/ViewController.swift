@@ -190,11 +190,12 @@ class ViewController: UIViewController {
     }
     
     @objc func promptExample() {
-        let _ = FHUD.show(.prompt(title: "hello world"), onView: self.view)
+        FHUD.hide(onView: self.view, animated: false)
+        let hud = FHUD.show(.prompt(title: "hello world"), onView: self.view)
         DispatchQueue.global(qos: .userInitiated).async {
-            sleep(3)
+            sleep(10)
             DispatchQueue.main.async {
-                FHUD.hide(onView: self.view)
+                hud.hide()
             }
         }
     }
