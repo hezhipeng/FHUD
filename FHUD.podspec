@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "FHUD"
-  s.version      = "0.3"
+  s.version      = "0.4"
   s.summary      = "FHUD"
   s.homepage     = "https://github.com/hezhipeng"
   s.license      = "MIT"
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "9.0"
   s.source       = { :git =>  "https://github.com/hezhipeng/FHUD.git", :tag => s.version }
-  s.swift_version = "4.1"
+  s.swift_version = "4.2"
   s.source_files = "FHUD/**/*.{swift,h,m}"
 
 end
