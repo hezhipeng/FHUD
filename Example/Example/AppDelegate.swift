@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        FHUD.appearance().titleColor = .red
 //        FHUD.appearance().titleFont = UIFont.systemFont(ofSize: 15)
 //        FHUD.appearance().contextViewBackgroundColor = .yellow   
